@@ -1,6 +1,7 @@
 ﻿using System;
+using TwicasDotNet;
 
-namespace TwicanDotNet
+namespace TwicasDotNet
 {
     public class AuthClient
     {

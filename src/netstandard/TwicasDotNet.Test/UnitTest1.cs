@@ -1,8 +1,8 @@
-﻿using Xunit;
-using TwicanDotNet;
-using System;
+﻿using System;
+using System.Linq;
+using Xunit;
 
-namespace TwicasDotNet
+namespace TwicasDotNet.Test
 {
     public class UnitTest1
     {
@@ -14,5 +14,6 @@ namespace TwicasDotNet
             Assert.Throws(typeof(ArgumentException), () => client.GetAuthURL("", ""));
             Assert.Equal(client.GetAuthURL("Hello", "World"), $"https://apiv2.twitcasting.tv/oauth2/authorize?client_id=Hello&response_type=code&state=World");
         }
+        
     }
 }
