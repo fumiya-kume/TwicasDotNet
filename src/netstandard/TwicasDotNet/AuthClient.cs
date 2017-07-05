@@ -21,7 +21,7 @@ namespace TwicasDotNet
                 .Split('#', '&')
                 .Where(s => s.Contains("access_token"))
                 .Select(s => s.Replace("access_token=", ""))
-                .First();
+                .FirstOrDefault();
         }
     }
 }

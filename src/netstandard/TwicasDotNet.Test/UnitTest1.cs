@@ -19,7 +19,7 @@ namespace TwicasDotNet.Test
         public void CallbackURLからアクセストークンを取得できるかテスト()
         {
             Assert.Equal("Hello", client.GetAccessTokenFromCallbackURL("http://example.com/#access_token=Hello&token_type=bearer&expires_in=15552000"));
-            //Assert.Equal("", client.GetAccessTokenFromCallbackURL("http://example.com/#result=denied"));
+            Assert.Equal(null, client.GetAccessTokenFromCallbackURL("http://example.com/#result=denied"));
         }
     }
 }
