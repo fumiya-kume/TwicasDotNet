@@ -11,7 +11,7 @@ namespace TwicasDotNet
         public string CSRF_Token { get; set; } = "";
         public string GetAuthURL(string ClientID = "", string CSRF_Token = "")
         {
-            if (string.IsNullOrWhiteSpace(ClientID) || string.IsNullOrWhiteSpace(CSRF_Token)) throw new ArgumentException();
+            if (string.IsNullOrWhiteSpace(ClientID)) throw new ArgumentException();
             return $"https://apiv2.twitcasting.tv/oauth2/authorize?client_id={ClientID}&response_type=token&state={CSRF_Token}";
         }
 

@@ -1,0 +1,32 @@
+﻿<Window x:Class="TwicasDotNet.Sample.Views.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:prism="http://prismlibrary.com/"
+        xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+        xmlns:wu="clr-namespace:TwicasDotNet.Sample.Util"
+        prism:ViewModelLocator.AutoWireViewModel="True"
+        Title="{Binding Title}" Height="350" Width="525">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="auto"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="auto"/>
+        </Grid.ColumnDefinitions>
+        <Label Content="{Binding AuthURL.Value}" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3"/>
+        <WebBrowser x:Name="browser" wu:WebBrowserUtil.BindableSource="{Binding AuthURL.Value, Mode=TwoWay}" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3">
+            <i:Interaction.Triggers>
+                <i:EventTrigger EventName="Navigated">
+                    <prism:InvokeCommandAction Command="{Binding AuthNavigateCommand}" CommandParameter="{Binding Path='self.source'}"/>
+                </i:EventTrigger>
+            </i:Interaction.Triggers>
+        </WebBrowser>
+        <Label Content="Client ID" Grid.Row="2" Grid.Column="0"/>
+        <TextBox Text="{Binding ClientID.Value}" Grid.Row="2" Grid.Column="1"/>
+        <Button Command="{Binding AuthCommand}" Content="送信" Grid.Row="2" Grid.Column="2"/>
+    </Grid>
+</Window>
