@@ -23,6 +23,7 @@ namespace TwicasDotNet.Sample.ViewModels
                 .Where(_ => !string.IsNullOrWhiteSpace(ClientID.Value))
                 .Subscribe(_ =>
                  {
+                     
                      AuthURL.Value = authClient.GetAuthURL(ClientID.Value);
                  });
 
@@ -30,6 +31,7 @@ namespace TwicasDotNet.Sample.ViewModels
                 .Where(_ => !string.IsNullOrWhiteSpace(AuthURL.Value))
                 .Subscribe(_ =>
             {
+                AuthClient authClient = new AuthClient();
                 var AccessKey = authClient.GetAccessTokenFromCallbackURL(AuthURL.Value);
                 if (string.IsNullOrWhiteSpace(AccessKey)) MessageBox.Show("Access Key Denied");
                 else MessageBox.Show($"AccessKey is {AccessKey}");
