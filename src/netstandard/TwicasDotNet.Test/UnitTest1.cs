@@ -11,8 +11,9 @@ namespace TwicasDotNet.Test
         [Fact]
         public void AutoURLが正しく発行されるかテスト()
         {
-            Assert.Throws(typeof(ArgumentException), () => client.GetAuthURL("", ""));
-            Assert.Equal(client.GetAuthURL("Hello", "World"), $"https://apiv2.twitcasting.tv/oauth2/authorize?client_id=Hello&response_type=token&state=World");
+            Assert.Throws(typeof(ArgumentException), () => client.GetAuthURL(""));
+            Assert.Equal(client.GetAuthURL("Hello",DeviceType.Server), $"https://apiv2.twitcasting.tv/oauth2/authorize?client_id=Hello&response_type=code&state=");
+            Assert.Equal(client.GetAuthURL("Hello", DeviceType.ServerLess), $"https://apiv2.twitcasting.tv/oauth2/authorize?client_id=Hello&response_type=token&state=");
         }
 
         [Fact]
@@ -20,6 +21,21 @@ namespace TwicasDotNet.Test
         {
             Assert.Equal("Hello", client.GetAccessTokenFromCallbackURL("http://example.com/#access_token=Hello&token_type=bearer&expires_in=15552000"));
             Assert.Equal(null, client.GetAccessTokenFromCallbackURL("http://example.com/#result=denied"));
+        }
+        
+        public static class デバイスのタイプからレスポンスタイプの指定する文字列を生成するのテスト
+        {
+            [Fact]
+            public static void サーバーレスを表すテキストを表示するテスト()
+            {
+                Assert.Equal("token", DeviceType.ServerLess.GetResponsTypeText());
+            }
+
+            [Fact]
+            public static void サーバーを表すテキストを表示するテスト()
+            {
+                Assert.Equal("code", DeviceType.Server.GetResponsTypeText());
+            }
         }
     }
 }
