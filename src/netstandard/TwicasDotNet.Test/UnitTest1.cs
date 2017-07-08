@@ -31,13 +31,21 @@ namespace TwicasDotNet.Test
                 Assert.Throws(typeof(ArgumentException), () => client.GetAuthURL(""));
             }
         }
-
-
-        [Fact]
-        public void CallbackURLからアクセストークンを取得できるかテスト()
+        
+        public static class CallbackURLからアクセストークンを取得できるかテスト
         {
-            Assert.Equal("Hello", client.GetAccessTokenFromCallbackURL("http://example.com/#access_token=Hello&token_type=bearer&expires_in=15552000"));
-            Assert.Equal(null, client.GetAccessTokenFromCallbackURL("http://example.com/#result=denied"));
+            [Fact]
+            public static void 正常にアクセストークンを取得するテスト()
+            {
+                var client = new AuthClient();
+                Assert.Equal("Hello", client.GetAccessTokenFromCallbackURL("http://example.com/#access_token=Hello&token_type=bearer&expires_in=15552000"));
+            }
+            [Fact]
+            public static void 正常にアクセストークンを取得できないテスト()
+            {
+                var client = new AuthClient();
+                Assert.Equal(null, client.GetAccessTokenFromCallbackURL("http://example.com/#result=denied"));
+            }
         }
 
         public static class デバイスのタイプからレスポンスタイプの指定する文字列を生成するのテスト
