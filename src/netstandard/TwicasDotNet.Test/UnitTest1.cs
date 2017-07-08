@@ -14,14 +14,14 @@ namespace TwicasDotNet.Test
             public static void サーバータイプのAuthURLを取得するテスト()
             {
                 var client = new AuthClient();
-                Assert.Equal(client.GetAuthURL("Hello", DeviceType.Server), $"https://apiv2.twitcasting.tv/oauth2/authorize?client_id=Hello&response_type=code&state=");
+                Assert.Equal(client.GetAuthURL("Hello", DeviceType.Server), $"https://apiv2.twitcasting.tv/oauth2/authorize?client_id=Hello&response_type=code");
             }
 
             [Fact]
             public static void サーバーレスタイプのAuthURLを取得するテスト()
             {
                 var client = new AuthClient();
-                Assert.Equal(client.GetAuthURL("Hello", DeviceType.ServerLess), $"https://apiv2.twitcasting.tv/oauth2/authorize?client_id=Hello&response_type=token&state=");
+                Assert.Equal(client.GetAuthURL("Hello", DeviceType.ServerLess), $"https://apiv2.twitcasting.tv/oauth2/authorize?client_id=Hello&response_type=token");
             }
 
             [Fact]
@@ -31,7 +31,7 @@ namespace TwicasDotNet.Test
                 Assert.Throws(typeof(ArgumentException), () => client.GetAuthURL(""));
             }
         }
-        
+
         public static class CallbackURLからアクセストークンを取得できるかテスト
         {
             [Fact]
