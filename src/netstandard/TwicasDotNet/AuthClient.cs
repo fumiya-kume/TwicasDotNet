@@ -9,10 +9,10 @@ namespace TwicasDotNet
     {
         public string ClientID { get; set; } = "";
         public string CSRF_Token { get; set; } = "";
-        public string GetAuthURL(string ClientID = "",DeviceType devicetype = DeviceType.ServerLess, string CSRF_Token = "")
+        public string GetAuthURL(string ClientID = "", string CSRF_Token = "")
         {
             if (string.IsNullOrWhiteSpace(ClientID)) throw new ArgumentException();
-            return $"https://apiv2.twitcasting.tv/oauth2/authorize?client_id={ClientID}&response_type={devicetype.GetResponsTypeText()}&state={CSRF_Token}";
+            return $"https://apiv2.twitcasting.tv/oauth2/authorize?client_id={ClientID}&response_type=token&state={CSRF_Token}";
         }
 
         public string GetAccessTokenFromCallbackURL(string callbackURL)
@@ -23,6 +23,5 @@ namespace TwicasDotNet
                 .Select(s => s.Replace("access_token=", ""))
                 .FirstOrDefault();
         }
-        
     }
 }
