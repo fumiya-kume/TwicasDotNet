@@ -6,6 +6,6 @@ namespace TwicasDotNet
 {
     public static class URLHolder
     {
-        public static string APICallBaseURL = "https://apiv2.twitcasting.tv";
+        public static string BaseURL = "https://apiv2.twitcasting.tv";
     }
 }

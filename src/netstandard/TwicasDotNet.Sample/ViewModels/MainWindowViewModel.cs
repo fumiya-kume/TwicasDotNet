@@ -24,7 +24,7 @@ namespace TwicasDotNet.Sample.ViewModels
                 .Subscribe(_ =>
                  {
                      
-                     AuthURL.Value = authClient.GetAuthURL(ClientID.Value);
+                     //AuthURL.Value = authClient.GetAuthURL(ClientID.Value);
                  });
 
             AuthURL

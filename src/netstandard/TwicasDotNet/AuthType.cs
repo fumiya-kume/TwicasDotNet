@@ -2,7 +2,7 @@
 
 namespace TwicasDotNet
 {
-    public enum DeviceType
+    public enum AuthType
     {
         ServerLess,
         Server
@@ -10,13 +10,13 @@ namespace TwicasDotNet
 
     public static class ExDeviceType
     {
-        public static string GetResponsTypeText(this DeviceType devicetype)
+        public static string GetResponsTypeText(this AuthType devicetype)
         {
             switch (devicetype)
             {
-                case DeviceType.ServerLess:
+                case AuthType.ServerLess:
                     return "token";
-                case DeviceType.Server:
+                case AuthType.Server:
                     return "code";
                 default:
                     throw new ArgumentException();

@@ -6,60 +6,47 @@ namespace TwicasDotNet.Test
 {
     public class UnitTest1
     {
+        private static string ClientKey = TestSetting.ClientID;
         private AuthClient client => new AuthClient();
-
-        public static class AuthURLが正しく発行されるかテスト
+        
+        public class ImplicintなAuthURLを取得する
         {
             [Fact]
-            public static void サーバータイプのAuthURLを取得するテスト()
+            public void ImplicitAuthするURLを取得する()
             {
-                var client = new AuthClient();
-                Assert.Equal(client.GetAuthURL("Hello", DeviceType.Server), $"https://apiv2.twitcasting.tv/oauth2/authorize?client_id=Hello&response_type=code");
+                var guid = Guid.NewGuid();
+                Assert.Equal("https://apiv2.twitcasting.tv/oauth2/authorize?client_id=" + guid.ToString() + "&response_type=token", AuthClient.GetImplicitAuthURL(guid.ToString()));
             }
 
-            [Fact]
-            public static void サーバーレスタイプのAuthURLを取得するテスト()
+            [Theory]
+            [InlineData(null)]
+            [InlineData("")]
+            public void ImplicitAuthするURLをNULLを渡して初期化(string ClientID)
             {
-                var client = new AuthClient();
-                Assert.Equal(client.GetAuthURL("Hello", DeviceType.ServerLess), $"https://apiv2.twitcasting.tv/oauth2/authorize?client_id=Hello&response_type=token");
-            }
-
-            [Fact]
-            public static void クランとキーをセットしない場合のテスト()
-            {
-                var client = new AuthClient();
-                Assert.Throws(typeof(ArgumentException), () => client.GetAuthURL(""));
+                Assert.Throws<NullReferenceException>(() => AuthClient.GetImplicitAuthURL(ClientID));
             }
         }
 
-        public static class CallbackURLからアクセストークンを取得できるかテスト
+        public class ImplicintなAuthURLを解析する
         {
-            [Fact]
-            public static void 正常にアクセストークンを取得するテスト()
+            [Theory]
+            [InlineData("")]
+            [InlineData(null)]
+            public void ImplicitなAuthの空白なコールバックURLを解析(string CallbackURL)
             {
-                var client = new AuthClient();
-                Assert.Equal("Hello", client.GetAccessTokenFromCallbackURL("http://example.com/#access_token=Hello&token_type=bearer&expires_in=15552000"));
-            }
-            [Fact]
-            public static void 正常にアクセストークンを取得できないテスト()
-            {
-                var client = new AuthClient();
-                Assert.Equal(null, client.GetAccessTokenFromCallbackURL("http://example.com/#result=denied"));
-            }
-        }
-
-        public static class デバイスのタイプからレスポンスタイプの指定する文字列を生成するのテスト
-        {
-            [Fact]
-            public static void サーバーレスを表すテキストを表示するテスト()
-            {
-                Assert.Equal("token", DeviceType.ServerLess.GetResponsTypeText());
+                var analyzer = new CallbackAnalyzer(CallbackURL);
+                Assert.Throws<NullReferenceException>(() => analyzer.isLoginSuccess());
+                Assert.Throws<NullReferenceException>(() => analyzer.getToken);
             }
 
             [Fact]
-            public static void サーバーを表すテキストを表示するテスト()
+            public void ImplicitなAuthの正常なコールバックURLを解析()
             {
-                Assert.Equal("code", DeviceType.Server.GetResponsTypeText());
+                var accessToken = "hugo";
+                var SampleCallbackURL = $"twicas://MainPage?#access_token={accessToken}&token_type=bearer&expires_in=15552000";
+                var analyzer = new CallbackAnalyzer(SampleCallbackURL);
+                Assert.Equal(true, analyzer.isLoginSuccess());
+                Assert.Equal(accessToken, analyzer.getToken);
             }
         }
     }

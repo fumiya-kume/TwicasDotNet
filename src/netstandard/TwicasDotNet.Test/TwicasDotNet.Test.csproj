@@ -61,9 +61,10 @@
     <Otherwise />
   </Choose>
   <ItemGroup>
+    <Compile Include="TestSetting.cs" />
+    <Compile Include="TestSettingSample.cs" />
     <Compile Include="UnitTest1.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="urlHolderTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

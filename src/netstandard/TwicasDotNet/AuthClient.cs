@@ -7,13 +7,12 @@ namespace TwicasDotNet
 {
     public class AuthClient
     {
-        public string ClientID { get; set; } = "";
-        public string CSRF_Token { get; set; } = "";
-        public string GetAuthURL(string ClientID = "", DeviceType deviceType = DeviceType.ServerLess, string CSRF_Token = "")
+        public static string GetImplicitAuthURL(string clientID)
         {
-            if (string.IsNullOrWhiteSpace(ClientID)) throw new ArgumentException();
-            return $"https://apiv2.twitcasting.tv/oauth2/authorize?client_id={ClientID}&response_type={deviceType.GetResponsTypeText()}";
+            if (string.IsNullOrWhiteSpace(clientID)) throw new NullReferenceException();
+            return $"https://apiv2.twitcasting.tv/oauth2/authorize?client_id={clientID}&response_type=token";
         }
+
 
         public string GetAccessTokenFromCallbackURL(string callbackURL)
         {
