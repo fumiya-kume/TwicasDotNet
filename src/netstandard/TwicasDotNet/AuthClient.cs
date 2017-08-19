@@ -12,15 +12,5 @@ namespace TwicasDotNet
             if (string.IsNullOrWhiteSpace(clientID)) throw new NullReferenceException();
             return $"https://apiv2.twitcasting.tv/oauth2/authorize?client_id={clientID}&response_type=token";
         }
-
-
-        public string GetAccessTokenFromCallbackURL(string callbackURL)
-        {
-            return callbackURL
-                .Split('#', '&')
-                .Where(s => s.Contains("access_token"))
-                .Select(s => s.Replace("access_token=", ""))
-                .FirstOrDefault();
-        }
     }
 }

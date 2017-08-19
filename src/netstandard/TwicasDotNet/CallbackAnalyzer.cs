@@ -25,12 +25,12 @@ namespace TwicasDotNet
 
 
         public bool isLoginSuccess() =>
-                              string.IsNullOrWhiteSpace(sampleCallBackURL) ?
-                              throw new NullReferenceException() :
-                              sampleCallBackURL
-                              .Split('#', '&')
-                              .Where(s => s.Contains("access_token"))
-                              .Count() > 0;
+            string.IsNullOrWhiteSpace(sampleCallBackURL) ?
+            throw new NullReferenceException() :
+            sampleCallBackURL
+            .Split('#', '&')
+            .Where(s => s.Contains("access_token"))
+            .Count() > 0;
 
 
     }
