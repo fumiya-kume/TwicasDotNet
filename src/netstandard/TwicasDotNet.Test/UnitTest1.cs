@@ -8,7 +8,7 @@ namespace TwicasDotNet.Test
     {
         private static string ClientKey = TestSetting.ClientID;
         private AuthClient client => new AuthClient();
-        
+
         public class ImplicintなAuthURLを取得する
         {
             [Fact]
@@ -47,6 +47,30 @@ namespace TwicasDotNet.Test
                 var analyzer = new CallbackAnalyzer(SampleCallbackURL);
                 Assert.Equal(true, analyzer.isLoginSuccess());
                 Assert.Equal(accessToken, analyzer.getToken);
+            }
+        }
+
+        public class ユーザーの情報を取得する
+        {
+            [Fact]
+            public async void 正常系()
+            {
+                var userid = "yonex";
+                var accessToken = TestSetting.AccessToken;
+                var apiclient = new APIRequestClient(accessToken);
+                UserObject result = await apiclient.getUserInfo(userid);
+                Assert.NotNull(result);
+                Assert.NotNull(result.user);
+            }
+
+            [Theory]
+            [InlineData("")]
+            [InlineData(null)]
+            public async void 異常系(string userID)
+            {
+                var accessToken = TestSetting.AccessToken;
+                var apiclient = new APIRequestClient(accessToken);
+                await Assert.ThrowsAsync<ArgumentException>(async () => await apiclient.getUserInfo(userID));
             }
         }
     }

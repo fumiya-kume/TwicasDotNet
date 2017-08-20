@@ -32,9 +32,9 @@ namespace TwicasDotNet.Sample.ViewModels
                 .Subscribe(_ =>
             {
                 AuthClient authClient = new AuthClient();
-                var AccessKey = authClient.GetAccessTokenFromCallbackURL(AuthURL.Value);
-                if (string.IsNullOrWhiteSpace(AccessKey)) MessageBox.Show("Access Key Denied");
-                else MessageBox.Show($"AccessKey is {AccessKey}");
+                //var AccessKey = authClient.GetAccessTokenFromCallbackURL(AuthURL.Value);
+                //if (string.IsNullOrWhiteSpace(AccessKey)) MessageBox.Show("Access Key Denied");
+                //else MessageBox.Show($"AccessKey is {AccessKey}");
                 
             });
         }
