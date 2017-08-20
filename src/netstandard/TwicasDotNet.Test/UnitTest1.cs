@@ -73,5 +73,30 @@ namespace TwicasDotNet.Test
                 await Assert.ThrowsAsync<ArgumentException>(async () => await apiclient.getUserInfo(userID));
             }
         }
+
+        public class ライブ画像を取得する
+        {
+            [Fact]
+            public async void 正常系()
+            {
+                var userID = "yonex";
+                var apiClient = new APIRequestClient(TestSetting.AccessToken);
+                var LiveTHunbailStream = await apiClient.getLiveThinbnal(userID);
+                Assert.NotNull(LiveTHunbailStream);
+                Assert.NotEqual(0, LiveTHunbailStream.Length);
+            }
+
+            [Theory]
+            [InlineData("")]
+            [InlineData(null)]
+            public async void userIDが不正(string userID)
+            {
+                var apiClient = new APIRequestClient(TestSetting.AccessToken);
+                await Assert.ThrowsAsync<ArgumentException>(async () => await apiClient.getLiveThinbnal(userID));
+            }
+
+        }
+
+        
     }
 }

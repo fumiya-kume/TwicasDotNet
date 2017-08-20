@@ -2,6 +2,7 @@
 using System.Net.Http;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
+using System.IO;
 
 namespace TwicasDotNet
 {
@@ -47,6 +48,19 @@ namespace TwicasDotNet
             httpRequestMessage.Method = HttpMethod.Get;
             httpRequestMessage.RequestUri = new Uri(requestURL);
             return httpRequestMessage;
+        }
+
+        public async Task<Stream> getLiveThinbnal(string userID)
+        {
+            if (string.IsNullOrWhiteSpace(userID)) throw new ArgumentException();
+            using (var client = new HttpClient())
+            {
+                var url = $"{Config.BaseURL}/users/{userID}/live/thumbnail";
+                var httpMessage = SetupHttpHeader(url);
+                var result = await client.SendAsync(httpMessage);
+                var stream = await result.Content.ReadAsStreamAsync();
+                return stream;
+            }
         }
     }
 }
