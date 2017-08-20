@@ -3,6 +3,7 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 using System.IO;
+using TwicasDotNet.Model;
 
 namespace TwicasDotNet
 {
@@ -13,6 +14,17 @@ namespace TwicasDotNet
         public APIRequestClient(string accessToken)
         {
             this.accessToken = accessToken;
+        }
+
+        private HttpRequestMessage SetupHttpHeader(string requestURL)
+        {
+            var httpRequestMessage = new HttpRequestMessage();
+            httpRequestMessage.Headers.Add("Accept", "application/json");
+            httpRequestMessage.Headers.Add("X-Api-Version", "2.0");
+            httpRequestMessage.Headers.Add("Authorization", "Bearer " + accessToken);
+            httpRequestMessage.Method = HttpMethod.Get;
+            httpRequestMessage.RequestUri = new Uri(requestURL);
+            return httpRequestMessage;
         }
 
         public async Task<UserObject> getUserInfo(string userName)
@@ -39,16 +51,7 @@ namespace TwicasDotNet
             }
         }
 
-        private HttpRequestMessage SetupHttpHeader(string requestURL)
-        {
-            var httpRequestMessage = new HttpRequestMessage();
-            httpRequestMessage.Headers.Add("Accept", "application/json");
-            httpRequestMessage.Headers.Add("X-Api-Version", "2.0");
-            httpRequestMessage.Headers.Add("Authorization", "Bearer " + accessToken);
-            httpRequestMessage.Method = HttpMethod.Get;
-            httpRequestMessage.RequestUri = new Uri(requestURL);
-            return httpRequestMessage;
-        }
+        
 
         public async Task<Stream> getLiveThinbnal(string userID)
         {
@@ -60,6 +63,21 @@ namespace TwicasDotNet
                 var result = await client.SendAsync(httpMessage);
                 var stream = await result.Content.ReadAsStreamAsync();
                 return stream;
+            }
+        }
+
+        public async Task<movieObject> getMovieInfo(string movieID)
+        {
+            if (string.IsNullOrWhiteSpace(movieID)) throw new ArgumentException();
+            using (var client = new HttpClient())
+            {
+                var url = $"{Config.BaseURL}/movies/{movieID}";
+                var httpMessage = SetupHttpHeader(url);
+
+                var result = await client.SendAsync(httpMessage);
+                var json = await result.Content.ReadAsStringAsync();
+                var movieObject = JsonConvert.DeserializeObject<movieObject>(json);
+                return movieObject;
             }
         }
     }

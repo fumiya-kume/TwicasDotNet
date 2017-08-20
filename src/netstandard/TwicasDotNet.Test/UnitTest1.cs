@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using TwicasDotNet.Model;
 using Xunit;
 
 namespace TwicasDotNet.Test
@@ -8,6 +9,11 @@ namespace TwicasDotNet.Test
     {
         private static string ClientKey = TestSetting.ClientID;
         private AuthClient client => new AuthClient();
+
+        public static APIRequestClient getAPIClient()
+        {
+            return new APIRequestClient(TestSetting.AccessToken);
+        }
 
         public class ImplicintなAuthURLを取得する
         {
@@ -80,7 +86,7 @@ namespace TwicasDotNet.Test
             public async void 正常系()
             {
                 var userID = "yonex";
-                var apiClient = new APIRequestClient(TestSetting.AccessToken);
+                APIRequestClient apiClient = getAPIClient();
                 var LiveTHunbailStream = await apiClient.getLiveThinbnal(userID);
                 Assert.NotNull(LiveTHunbailStream);
                 Assert.NotEqual(0, LiveTHunbailStream.Length);
@@ -97,6 +103,25 @@ namespace TwicasDotNet.Test
 
         }
 
-        
+        public class ライブ情報を取得する
+        {
+            [Fact]
+            public async void 正常系()
+            {
+                var movieID = TestSetting.MovieID;
+                var apiclient = getAPIClient();
+                movieObject LiveInfo = await apiclient.getMovieInfo(movieID);
+                Assert.NotEqual("", LiveInfo.movie.id);
+            }
+
+            [Theory]
+            [InlineData("")]
+            [InlineData(null)]
+            public async void 異常系(string movieID)
+            {
+                var apiclient = getAPIClient();
+                await Assert.ThrowsAsync<ArgumentException>(async () => await apiclient.getMovieInfo(movieID));
+            }
+        }
     }
 }

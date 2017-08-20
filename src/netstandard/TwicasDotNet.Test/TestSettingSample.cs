@@ -4,5 +4,6 @@
     {
         public static string ClientID  = "";
         public static string AccessToken = "";
+        public static string MovieID = "";
     }
 }
