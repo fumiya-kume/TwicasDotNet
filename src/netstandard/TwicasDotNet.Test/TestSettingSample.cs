@@ -3,5 +3,6 @@
     public static class TestSettingSample
     {
         public static string ClientID  = "";
+        public static string AccessToken = "";
     }
 }
