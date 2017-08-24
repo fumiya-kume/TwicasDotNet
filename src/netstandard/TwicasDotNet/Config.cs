@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace TwicasDotNet
+﻿namespace TwicasDotNet
 {
     public static class Config
     {

@@ -1,11 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using TwicasDotNet;
 
 namespace TwicasDotNet
 {
-    public class AuthClient
+    public static class AuthURL
     {
         public static string GetImplicitAuthURL(string clientID)
         {

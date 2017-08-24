@@ -3,7 +3,7 @@ using System.Linq;
 
 namespace TwicasDotNet
 {
-    public class CallbackAnalyzer
+    public class CallbackAnalyzer : ICallbackAnalyzer
     {
         private string sampleCallBackURL;
 
@@ -20,10 +20,7 @@ namespace TwicasDotNet
              .Where(s => s.Contains("access_token"))
              .Select(s => s.Replace("access_token=", ""))
              .FirstOrDefault();
-
-
-
-
+        
         public bool isLoginSuccess() =>
             string.IsNullOrWhiteSpace(sampleCallBackURL) ?
             throw new NullReferenceException() :
@@ -31,7 +28,5 @@ namespace TwicasDotNet
             .Split('#', '&')
             .Where(s => s.Contains("access_token"))
             .Count() > 0;
-
-
     }
 }

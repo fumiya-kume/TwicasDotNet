@@ -8,7 +8,6 @@ namespace TwicasDotNet.Test
     public class UnitTest1
     {
         private static string ClientKey = TestSetting.ClientID;
-        private AuthClient client => new AuthClient();
 
         public static APIRequestClient getAPIClient()
         {
@@ -21,7 +20,7 @@ namespace TwicasDotNet.Test
             public void ImplicitAuthするURLを取得する()
             {
                 var guid = Guid.NewGuid();
-                Assert.Equal("https://apiv2.twitcasting.tv/oauth2/authorize?client_id=" + guid.ToString() + "&response_type=token", AuthClient.GetImplicitAuthURL(guid.ToString()));
+                Assert.Equal("https://apiv2.twitcasting.tv/oauth2/authorize?client_id=" + guid.ToString() + "&response_type=token", AuthURL.GetImplicitAuthURL(guid.ToString()));
             }
 
             [Theory]
@@ -29,7 +28,7 @@ namespace TwicasDotNet.Test
             [InlineData("")]
             public void ImplicitAuthするURLをNULLを渡して初期化(string ClientID)
             {
-                Assert.Throws<NullReferenceException>(() => AuthClient.GetImplicitAuthURL(ClientID));
+                Assert.Throws<NullReferenceException>(() => AuthURL.GetImplicitAuthURL(ClientID));
             }
         }
 
@@ -63,7 +62,7 @@ namespace TwicasDotNet.Test
             {
                 var clientID = Guid.NewGuid().ToString();
                 var ActualURL = $"https://apiv2.twitcasting.tv/oauth2/authorize?client_id={clientID}&response_type=code";
-                Assert.Equal(ActualURL, AuthClient.GetGrantAuthURL(clientID));
+                Assert.Equal(ActualURL, AuthURL.GetGrantAuthURL(clientID));
             }
 
             [Theory]
@@ -71,7 +70,7 @@ namespace TwicasDotNet.Test
             [InlineData("")]
             public void 不適切なClientIDを渡すと例外が発生する(string ClientID)
             {
-                Assert.Throws<NullReferenceException>(() => AuthClient.GetImplicitAuthURL(ClientID));
+                Assert.Throws<NullReferenceException>(() => AuthURL.GetImplicitAuthURL(ClientID));
             }
         }
 

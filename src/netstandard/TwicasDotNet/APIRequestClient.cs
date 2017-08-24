@@ -7,7 +7,7 @@ using TwicasDotNet.Model;
 
 namespace TwicasDotNet
 {
-    public class APIRequestClient
+    public class APIRequestClient : IAPIRequestClient
     {
         private string accessToken;
 

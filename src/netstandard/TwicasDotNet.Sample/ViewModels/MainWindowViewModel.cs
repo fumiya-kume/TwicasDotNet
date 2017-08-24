@@ -10,7 +10,6 @@ namespace TwicasDotNet.Sample.ViewModels
 {
     public class MainWindowViewModel : BindableBase
     {
-        private readonly AuthClient authClient = new AuthClient();
 
         public ReactiveProperty<string> ClientID { get; set; } = new ReactiveProperty<string>();
         public ReactiveProperty<string> AuthURL { get; set; } = new ReactiveProperty<string>();
@@ -31,7 +30,7 @@ namespace TwicasDotNet.Sample.ViewModels
                 .Where(_ => !string.IsNullOrWhiteSpace(AuthURL.Value))
                 .Subscribe(_ =>
             {
-                AuthClient authClient = new AuthClient();
+                //AuthURL authClient = new AuthURL();
                 //var AccessKey = authClient.GetAccessTokenFromCallbackURL(AuthURL.Value);
                 //if (string.IsNullOrWhiteSpace(AccessKey)) MessageBox.Show("Access Key Denied");
                 //else MessageBox.Show($"AccessKey is {AccessKey}");
