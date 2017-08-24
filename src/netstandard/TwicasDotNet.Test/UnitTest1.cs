@@ -56,72 +56,91 @@ namespace TwicasDotNet.Test
             }
         }
 
-        public class ユーザーの情報を取得する
+        public class GrantなAuthURLを取得する
         {
             [Fact]
-            public async void 正常系()
+            public void 適切なClientIDを引数に渡した場合()
             {
-                var userid = "yonex";
-                var accessToken = TestSetting.AccessToken;
-                var apiclient = new APIRequestClient(accessToken);
-                UserObject result = await apiclient.getUserInfo(userid);
-                Assert.NotNull(result);
-                Assert.NotNull(result.user);
+                var clientID = Guid.NewGuid().ToString();
+                var ActualURL = $"https://apiv2.twitcasting.tv/oauth2/authorize?client_id={clientID}&response_type=code";
+                Assert.Equal(ActualURL, AuthClient.GetGrantAuthURL(clientID));
             }
 
             [Theory]
-            [InlineData("")]
             [InlineData(null)]
-            public async void 異常系(string userID)
+            [InlineData("")]
+            public void 不適切なClientIDを渡すと例外が発生する(string ClientID)
             {
-                var accessToken = TestSetting.AccessToken;
-                var apiclient = new APIRequestClient(accessToken);
-                await Assert.ThrowsAsync<ArgumentException>(async () => await apiclient.getUserInfo(userID));
+                Assert.Throws<NullReferenceException>(() => AuthClient.GetImplicitAuthURL(ClientID));
             }
         }
 
-        public class ライブ画像を取得する
+    public class ユーザーの情報を取得する
+    {
+        [Fact]
+        public async void 正常系()
         {
-            [Fact]
-            public async void 正常系()
-            {
-                var userID = "yonex";
-                APIRequestClient apiClient = getAPIClient();
-                var LiveTHunbailStream = await apiClient.getLiveThinbnal(userID);
-                Assert.NotNull(LiveTHunbailStream);
-                Assert.NotEqual(0, LiveTHunbailStream.Length);
-            }
-
-            [Theory]
-            [InlineData("")]
-            [InlineData(null)]
-            public async void userIDが不正(string userID)
-            {
-                var apiClient = new APIRequestClient(TestSetting.AccessToken);
-                await Assert.ThrowsAsync<ArgumentException>(async () => await apiClient.getLiveThinbnal(userID));
-            }
-
+            var userid = "yonex";
+            var accessToken = TestSetting.AccessToken;
+            var apiclient = new APIRequestClient(accessToken);
+            UserObject result = await apiclient.getUserInfo(userid);
+            Assert.NotNull(result);
+            Assert.NotNull(result.user);
         }
 
-        public class ライブ情報を取得する
+        [Theory]
+        [InlineData("")]
+        [InlineData(null)]
+        public async void 異常系(string userID)
         {
-            [Fact]
-            public async void 正常系()
-            {
-                var movieID = TestSetting.MovieID;
-                var apiclient = getAPIClient();
-                movieObject LiveInfo = await apiclient.getMovieInfo(movieID);
-                Assert.NotEqual("", LiveInfo.movie.id);
-            }
-
-            [Theory]
-            [InlineData("")]
-            [InlineData(null)]
-            public async void 異常系(string movieID)
-            {
-                var apiclient = getAPIClient();
-                await Assert.ThrowsAsync<ArgumentException>(async () => await apiclient.getMovieInfo(movieID));
-            }
+            var accessToken = TestSetting.AccessToken;
+            var apiclient = new APIRequestClient(accessToken);
+            await Assert.ThrowsAsync<ArgumentException>(async () => await apiclient.getUserInfo(userID));
         }
     }
+
+    public class ライブ画像を取得する
+    {
+        [Fact]
+        public async void 正常系()
+        {
+            var userID = "yonex";
+            APIRequestClient apiClient = getAPIClient();
+            var LiveTHunbailStream = await apiClient.getLiveThinbnal(userID);
+            Assert.NotNull(LiveTHunbailStream);
+            Assert.NotEqual(0, LiveTHunbailStream.Length);
+        }
+
+        [Theory]
+        [InlineData("")]
+        [InlineData(null)]
+        public async void userIDが不正(string userID)
+        {
+            var apiClient = new APIRequestClient(TestSetting.AccessToken);
+            await Assert.ThrowsAsync<ArgumentException>(async () => await apiClient.getLiveThinbnal(userID));
+        }
+
+    }
+
+    public class ライブ情報を取得する
+    {
+        [Fact]
+        public async void 正常系()
+        {
+            var movieID = TestSetting.MovieID;
+            var apiclient = getAPIClient();
+            movieObject LiveInfo = await apiclient.getMovieInfo(movieID);
+            Assert.NotEqual("", LiveInfo.movie.id);
+        }
+
+        [Theory]
+        [InlineData("")]
+        [InlineData(null)]
+        public async void 異常系(string movieID)
+        {
+            var apiclient = getAPIClient();
+            await Assert.ThrowsAsync<ArgumentException>(async () => await apiclient.getMovieInfo(movieID));
+        }
+    }
+}
 }
