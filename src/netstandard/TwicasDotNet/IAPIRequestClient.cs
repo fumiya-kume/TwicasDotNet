@@ -6,8 +6,8 @@ namespace TwicasDotNet
 {
     public interface IAPIRequestClient
     {
-        Task<Stream> getLiveThinbnal(string userID);
-        Task<movieObject> getMovieInfo(string movieID);
-        Task<UserObject> getUserInfo(string userName);
+        Task<Stream> GetLiveThinbnal(string userID);
+        Task<movieObject> GetMovieInfo(string movieID);
+        Task<UserObject> GetUserInfo(string userName);
     }
 }

@@ -27,7 +27,7 @@ namespace TwicasDotNet
             return httpRequestMessage;
         }
 
-        public async Task<UserObject> getUserInfo(string userName)
+        public async Task<UserObject> GetUserInfo(string userName)
         {
             if (string.IsNullOrWhiteSpace(userName)) throw new ArgumentException();
             var requestURL = $"{Config.BaseURL}/users/{userName}";
@@ -53,7 +53,7 @@ namespace TwicasDotNet
 
         
 
-        public async Task<Stream> getLiveThinbnal(string userID)
+        public async Task<Stream> GetLiveThinbnal(string userID)
         {
             if (string.IsNullOrWhiteSpace(userID)) throw new ArgumentException();
             using (var client = new HttpClient())
@@ -66,7 +66,7 @@ namespace TwicasDotNet
             }
         }
 
-        public async Task<movieObject> getMovieInfo(string movieID)
+        public async Task<movieObject> GetMovieInfo(string movieID)
         {
             if (string.IsNullOrWhiteSpace(movieID)) throw new ArgumentException();
             using (var client = new HttpClient())

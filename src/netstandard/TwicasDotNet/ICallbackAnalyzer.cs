@@ -2,8 +2,8 @@
 {
     public interface ICallbackAnalyzer
     {
-        string getToken { get; }
+        string GetToken { get; }
 
-        bool isLoginSuccess();
+        bool IsLoginSuccess();
     }
 }

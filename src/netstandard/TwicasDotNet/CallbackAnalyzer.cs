@@ -12,7 +12,7 @@ namespace TwicasDotNet
             this.sampleCallBackURL = sampleCallBackURL;
         }
 
-        public string getToken =>
+        public string GetToken =>
              string.IsNullOrWhiteSpace(sampleCallBackURL) ?
              throw new NullReferenceException() :
              sampleCallBackURL
@@ -21,7 +21,7 @@ namespace TwicasDotNet
              .Select(s => s.Replace("access_token=", ""))
              .FirstOrDefault();
         
-        public bool isLoginSuccess() =>
+        public bool IsLoginSuccess() =>
             string.IsNullOrWhiteSpace(sampleCallBackURL) ?
             throw new NullReferenceException() :
             sampleCallBackURL
