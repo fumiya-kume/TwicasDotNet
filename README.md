@@ -16,3 +16,6 @@ Install-Package TwicasDotNet -Version 0.4.2
 
 [Nuget.org](https://www.nuget.org/packages/TwicasDotNet/)
 
+# License
+
+MIT
